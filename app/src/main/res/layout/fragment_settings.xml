@@ -9,6 +9,7 @@
     android:background="@color/fragment_bg"
     tools:context=".ui.fragments.eventHistory.EventHistoryFragment">
 
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="0dp"
@@ -25,5 +26,88 @@
             android:layout_height="wrap_content" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        tools:ignore="ExtraText">
+
+        <TextView
+            android:id="@+id/settingsTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="@string/settings" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/operationSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:ignore="ExtraText">
+
+        <TextView
+            android:id="@+id/settingOperation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            tools:text="@string/operation" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notificationSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/operationSettings"
+        tools:ignore="ExtraText">
+
+        <TextView
+            android:id="@+id/settingNotification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            tools:text="@string/notifications" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnClearHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:padding="3dp"
+        android:text="@string/clear_history"
+        android:textAllCaps="false"
+        android:textColor="@android:color/darker_gray"
+        android:background="@color/fragment_bg"
+        android:textSize="18sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notificationSettings"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="25dp"
+
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
