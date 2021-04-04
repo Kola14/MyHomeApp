@@ -10,4 +10,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_green">#2FCF2F</color>
     <color name="red"> #D30404 </color>
+    <color name="fragment_bg">#ededed</color>
+    <color name="colorPrimary">#6202EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
 </resources>
