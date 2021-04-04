@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.myhomeapp.R
 
 
-class SecondFragment : Fragment() {
+class EventHistoryFragment : Fragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
