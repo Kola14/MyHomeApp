@@ -11,5 +11,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="event_history"> История событий</string>
     <string name="settings">Настройки</string>
+    <string name="confirm">Подтвердить</string>
 
 </resources>
