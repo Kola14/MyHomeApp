@@ -1,10 +1,10 @@
-package com.example.myhomeapp.ui.fragments.eventHistory
+package com.example.myhomeapp.ui.fragments.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class EventHistoryViewModel : ViewModel() {
+class SettingsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "Test"

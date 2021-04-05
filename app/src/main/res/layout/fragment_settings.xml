@@ -7,44 +7,16 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     android:background="@color/fragment_bg"
-    tools:context=".ui.fragments.eventHistory.EventHistoryFragment">
+    tools:context=".ui.fragments.settings.SettingsFragment">
 
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:theme="@style/ToolBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-        tools:ignore="ExtraText">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/settingsTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="@string/settings" />
 
     </LinearLayout>
 
@@ -53,18 +25,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ExtraText">
 
         <TextView
             android:id="@+id/settingOperation"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:textSize="18sp"
+            android:textColor="@color/black"
             tools:text="@string/operation" />
+
+        <Switch
+            android:id="@+id/operationSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:checked="true"
+            android:layout_marginEnd="20dp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     </LinearLayout>
 
@@ -78,13 +60,23 @@
 
         <TextView
             android:id="@+id/settingNotification"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:textSize="18sp"
+            android:textColor="@color/black"
             tools:text="@string/notifications" />
+
+        <Switch
+            android:id="@+id/notificationSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:checked="true"
+            android:layout_marginEnd="20dp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     </LinearLayout>
 
@@ -107,6 +99,7 @@
         tools:layout_editor_absoluteY="25dp"
 
         />
+
 
 
 
