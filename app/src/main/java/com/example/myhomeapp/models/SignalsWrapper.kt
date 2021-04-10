@@ -13,5 +13,5 @@ data class Signals(
     val id: Int,
     val date: String,
     val time: String,
-    val status: Boolean
+    val isConfirmed: Boolean
 ): Parcelable

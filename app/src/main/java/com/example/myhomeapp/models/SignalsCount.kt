@@ -2,7 +2,7 @@ package com.example.myhomeapp.models
 
 import com.google.gson.annotations.SerializedName
 
-data class SignalsCountCount (
+data class SignalsCount (
     @SerializedName("rows") val rows: List<SignalsCountRow>
 )
 
