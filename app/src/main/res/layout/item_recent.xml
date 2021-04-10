@@ -11,9 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:padding="8dp"
         android:layout_height="match_parent"
-        android:minHeight="100dp">
+        android:minHeight="80dp">
 
         <TextView
             android:id="@+id/time"
@@ -55,20 +54,33 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnConfirm"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:padding="3dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/confrim_button_background"
+            android:backgroundTint="@color/light_green"
             android:text="@string/confirm"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="15sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.945"
+            app:layout_constraintHorizontal_bias="0.923"
             app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="25dp"
-            android:background="@drawable/confrim_button_background"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"/>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/confirmedSignal"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="300dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="@color/light_green"
-            />
+            android:src="@drawable/ic_baseline_verified_24_green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

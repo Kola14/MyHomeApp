@@ -1,5 +1,6 @@
 package com.example.myhomeapp.di
 
+import com.example.myhomeapp.remote.RetrofitApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -9,13 +10,13 @@ import javax.inject.Singleton
 @Module
 class AppProviderModule {
 
-    /*@Provides
+    @Provides
     @Singleton
     fun provideRetrofitApi(
         gson: Gson
     ):RetrofitApi {
         return RetrofitApi(gson)
-    }*/
+    }
 
     @Provides
     @Singleton

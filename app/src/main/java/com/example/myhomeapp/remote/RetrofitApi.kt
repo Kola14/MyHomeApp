@@ -1,6 +1,8 @@
 package com.example.myhomeapp.remote
 
 import com.example.myhomeapp.BuildConfig
+import com.example.myhomeapp.models.Signals
+import com.example.myhomeapp.models.SignalsWrapper
 import com.example.myhomeapp.remote.api.SignalsApi
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -51,15 +53,34 @@ class RetrofitApi @Inject constructor(
 
     suspend fun getRecent(
             userId: Int?
-    ): String? {
-        var gson = Gson()
+    ): Resource<SignalsWrapper> {
 
-        return gson.toJson("\"rows\"[{\"id\":\"201\", \"date\":\"01.04.2021\", \"time\":\"11:15\", \"isConfirmed\": False}]")
+        //return signals.getRecent(userId)
+        val list = mutableListOf<Signals>()
+        list.add(Signals(1,"01.04.2021","11:15", false))
+        list.add(Signals(2,"01.04.2021","11:25", false))
+        list.add(Signals(3,"01.04.2021","11:35", false))
+        list.add(Signals(4,"01.04.2021","11:45", true))
+        list.add(Signals(5,"01.04.2021","11:55", true))
+        list.add(Signals(6,"01.04.2021","12:45", false))
+        list.add(Signals(7,"01.04.2021","12:55", false))
+
+        return Resource.success(SignalsWrapper(list))
     }
 
     suspend fun getEventHistory(
             userId: Int?
-    ): String? {
-        return gson.toJson("\"rows\"[{\"id\":\"201\", \"date\":\"01.04.2021\", \"time\":\"11:15\", \"isConfirmed\": False}]")
+    ): Resource<SignalsWrapper> {
+        //return signals.getEventHistory(userId)
+        val list = mutableListOf<Signals>()
+        list.add(Signals(1,"01.04.2021","11:15", false))
+        list.add(Signals(2,"01.04.2021","11:25", false))
+        list.add(Signals(3,"01.04.2021","11:35", false))
+        list.add(Signals(4,"01.04.2021","11:45", true))
+        list.add(Signals(5,"01.04.2021","11:55", true))
+        list.add(Signals(6,"01.04.2021","12:45", false))
+        list.add(Signals(7,"01.04.2021","12:55", false))
+
+        return Resource.success(SignalsWrapper(list))
     }
 }

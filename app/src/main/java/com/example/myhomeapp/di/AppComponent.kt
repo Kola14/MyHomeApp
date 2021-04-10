@@ -1,5 +1,7 @@
 package com.example.myhomeapp.di
 
+import com.example.myhomeapp.ui.fragments.eventHistory.EventHistoryFragment
+import com.example.myhomeapp.ui.fragments.recentEvents.RecentEventsFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -7,7 +9,6 @@ import javax.inject.Singleton
 @Component(modules = [ViewModelFactoryModule::class, AppProviderModule::class])
 interface AppComponent {
 
-    //fun inject(fragment: NewsFeedFragment)
-    //fun inject(fragment: ConverterFragment)
-    //fun inject(fragment: NewsSearchFragment)
+    fun inject(fragment: RecentEventsFragment)
+    fun inject(fragment: EventHistoryFragment)
 }
