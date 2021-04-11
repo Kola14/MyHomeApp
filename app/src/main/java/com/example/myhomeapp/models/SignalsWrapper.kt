@@ -10,8 +10,8 @@ data class SignalsWrapper(
 
 @Parcelize
 data class Signals(
-    val id: Int,
-    val date: String,
-    val time: String,
-    val isConfirmed: Boolean
+        val id: Int,
+        val date: String,
+        val time: String,
+        var isConfirmed: Boolean
 ): Parcelable

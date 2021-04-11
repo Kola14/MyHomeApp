@@ -26,8 +26,8 @@ class RecentEventsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_recent_events, container, false)
     }
@@ -37,11 +37,11 @@ class RecentEventsFragment : Fragment() {
         initAdapter()
         observeLiveData()
 
-        viewModel.getSignals(0)
+        viewModel.getSignals()
     }
 
     private fun initAdapter() {
-        recentEventsAdapter = RecentEventsAdapter(viewModel.getSignals(0))
+        recentEventsAdapter = RecentEventsAdapter(viewModel.getSignals())
         view?.findViewById<RecyclerView>(R.id.recentEventRecycler)?.apply {
             adapter = recentEventsAdapter
         }
@@ -53,6 +53,17 @@ class RecentEventsFragment : Fragment() {
             if (!newsList.isNullOrEmpty()) {
                 recentEventsAdapter.submit(newsList)
             }
+        }
+
+        viewModel.signalsLiveData
+        fun onChange(){
+            initAdapter()
+            viewModel.getSignals()
+        }
+
+        viewModel.signalsLiveData.value?.also {
+            initAdapter()
+            viewModel.getSignals()
         }
     }
 }
