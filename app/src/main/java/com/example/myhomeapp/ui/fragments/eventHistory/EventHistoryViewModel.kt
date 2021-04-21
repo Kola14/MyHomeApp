@@ -17,7 +17,7 @@ class EventHistoryViewModel  @Inject constructor(
 
         viewModelScope.launch {
 
-            val response = api.getRecent(userId)
+            val response = api.getEventHistory(userId)
             val data = response.data?.data
             data?.let { signals ->
                 signalsLiveData.value = signals

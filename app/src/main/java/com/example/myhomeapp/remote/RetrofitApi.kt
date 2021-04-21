@@ -1,13 +1,14 @@
 package com.example.myhomeapp.remote
 
 import com.example.myhomeapp.BuildConfig
-import com.example.myhomeapp.models.Signals
 import com.example.myhomeapp.models.SignalsWrapper
 import com.example.myhomeapp.remote.api.SignalsApi
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class RetrofitApi @Inject constructor(
         private val gson: Gson
 ) {
-    private val URL = "URL"
+    private val URL = "http://185.197.74.219:8000/"
     private val signals by lazy { getRetrofit(URL).create(SignalsApi::class.java) }
 
     private fun getRetrofit(baseUrl: String): Retrofit {
@@ -51,6 +52,8 @@ class RetrofitApi @Inject constructor(
     }
 
 
+
+    /*
     suspend fun getRecent(
             userId: Int?
     ): Resource<SignalsWrapper> {
@@ -68,6 +71,44 @@ class RetrofitApi @Inject constructor(
         return Resource.success(SignalsWrapper(list))
     }
 
+
+     */
+
+    suspend fun getRecent(
+            userId: Int?
+    ): Resource<SignalsWrapper> {
+        return responseWrapper {
+             //signals.getRecent(userId)
+            signals.getRecent()
+        }
+    }
+
+    suspend fun getEventHistory(
+            userId: Int?
+    ): Resource<SignalsWrapper> {
+        return responseWrapper {
+            //signals.getEventHistory(userId)
+            signals.getEventHistory()
+        }
+    }
+
+    fun confirmSignal(
+            signalId: Int?
+    ) {
+       signals.confirmSignal(signalId).enqueue(object : Callback<Void> {
+           override fun onFailure(call: Call<Void>?, t: Throwable?) {
+               // failure
+           }
+
+           override fun onResponse(call: Call<Void>?, response: Response<Void>?) {
+               // success
+           }
+       })
+    }
+
+
+
+/*
     suspend fun getEventHistory(
             userId: Int?
     ): Resource<SignalsWrapper> {
@@ -83,4 +124,6 @@ class RetrofitApi @Inject constructor(
 
         return Resource.success(SignalsWrapper(list))
     }
+
+ */
 }

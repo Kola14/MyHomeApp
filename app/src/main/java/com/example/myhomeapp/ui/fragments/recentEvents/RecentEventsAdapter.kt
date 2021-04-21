@@ -9,17 +9,13 @@ import com.example.myhomeapp.R
 import com.example.myhomeapp.core.RecyclerAdapter
 import com.example.myhomeapp.models.Signals
 import com.example.myhomeapp.remote.RetrofitApi
-import javax.inject.Inject
 
 class RecentEventsAdapter (
+    private  val api: RetrofitApi,
     private val model: Unit
 ) : RecyclerAdapter<Signals>() {
-    @Inject
-    lateinit var api: RetrofitApi
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<Signals> {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recent, parent, false)
-
         return object : BindingHolder<Signals>(view) {
             override fun bind(model: Signals, position: Int) {
 
@@ -27,11 +23,13 @@ class RecentEventsAdapter (
                 view.findViewById<TextView>(R.id.date).text = model.date;
                 view.findViewById<TextView>(R.id.title).text = "Получен сигнал";
 
-                if (!model.isConfirmed) {
+                if (!model.isconfirmed) {
                     view.findViewById<AppCompatButton>(R.id.btnConfirm).setOnClickListener(){
 
-                        model.isConfirmed = true
-                        //api.confirm(userId)
+                        model.isconfirmed = true
+
+                        api.confirmSignal(model.id)
+
                         view.findViewById<AppCompatButton>(R.id.btnConfirm).isEnabled = false
                         view.findViewById<AppCompatButton>(R.id.btnConfirm).visibility = View.GONE
                     }

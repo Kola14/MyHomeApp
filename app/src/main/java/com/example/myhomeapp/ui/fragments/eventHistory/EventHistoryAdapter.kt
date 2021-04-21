@@ -19,7 +19,7 @@ class EventHistoryAdapter (
                 view.findViewById<TextView>(R.id.time).text = model.time;
                 view.findViewById<TextView>(R.id.date).text = model.date;
 
-                if (model.isConfirmed) {
+                if (model.isconfirmed) {
                     view.findViewById<TextView>(R.id.status).text = "Подтверждено"
                     view.findViewById<TextView>(R.id.status).backgroundTintList = view.context.getColorStateList(R.color.light_green)
                 }

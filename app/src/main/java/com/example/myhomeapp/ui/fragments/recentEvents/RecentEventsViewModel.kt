@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 
 class RecentEventsViewModel @Inject constructor(
-        private val api: RetrofitApi
+        val api: RetrofitApi
 ) : ViewModel() {
     val signalsLiveData = MutableLiveData<List<Signals>>()
     val userId = 1001
@@ -38,6 +38,10 @@ class RecentEventsViewModel @Inject constructor(
                 signalsLiveData.value = signals
             }
         }
+    }
+
+    fun confirmSignal(id: Int){
+        viewModelScope.launch { api.confirmSignal(id); }
     }
 
     sealed class State {

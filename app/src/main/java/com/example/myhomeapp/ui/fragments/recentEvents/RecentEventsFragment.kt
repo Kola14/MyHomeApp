@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhomeapp.MyApplication
 import com.example.myhomeapp.R
+import com.example.myhomeapp.models.Signals
 import javax.inject.Inject
 
 
@@ -41,11 +42,10 @@ class RecentEventsFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        recentEventsAdapter = RecentEventsAdapter(viewModel.getSignals())
+        recentEventsAdapter = RecentEventsAdapter(viewModel.api, viewModel.getSignals())
         view?.findViewById<RecyclerView>(R.id.recentEventRecycler)?.apply {
             adapter = recentEventsAdapter
         }
-
     }
 
     private fun observeLiveData() {
@@ -57,9 +57,18 @@ class RecentEventsFragment : Fragment() {
 
         viewModel.signalsLiveData
         fun onChange(){
+
+            for (i: Signals in viewModel.signalsLiveData.value!!){
+                if (i.isconfirmed){
+                    viewModel.confirmSignal(i.id);
+                }
+            }
+
             initAdapter()
             viewModel.getSignals()
         }
+
+
 
         viewModel.signalsLiveData.value?.also {
             initAdapter()

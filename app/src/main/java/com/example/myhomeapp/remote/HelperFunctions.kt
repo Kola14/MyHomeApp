@@ -9,8 +9,8 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 suspend fun <T> safeApiCall(
-    dispatcher: CoroutineDispatcher,
-    apiCall: suspend () -> Response<T>,
+        dispatcher: CoroutineDispatcher,
+        apiCall: suspend () -> Response<T>,
 ): Resource<T> {
     return withContext(dispatcher) {
         val resource: Resource<T>
@@ -56,8 +56,8 @@ fun <T> errorData(response: Response<T>): ErrorEntity {
     if (errorBody != null) {
         try {
             errorEntity.errorDesc =
-                gson.fromJson(errorBody, NetworkErrorResponse::class.java)
-                    .errors._global.first().message
+                    gson.fromJson(errorBody, NetworkErrorResponse::class.java)
+                            .errors._global.first().message
         } catch (ex: Throwable) {
             Log.d("CoroutineHandler", "ErrorBody unknown format")
         }
