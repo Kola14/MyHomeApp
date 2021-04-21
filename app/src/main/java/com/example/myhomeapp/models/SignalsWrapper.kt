@@ -11,6 +11,7 @@ data class SignalsWrapper(
 @Parcelize
 data class Signals(
         val id: Int,
+        val device_id: Int,
         val date: String,
         val time: String,
         var isconfirmed: Boolean

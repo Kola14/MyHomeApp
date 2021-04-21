@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myhomeapp.models.Devices
 import com.example.myhomeapp.models.Signals
 import com.example.myhomeapp.remote.RetrofitApi
 import kotlinx.coroutines.Job
@@ -16,10 +17,21 @@ class RecentEventsViewModel @Inject constructor(
         val api: RetrofitApi
 ) : ViewModel() {
     val signalsLiveData = MutableLiveData<List<Signals>>()
+    val devicesLiveData = MutableLiveData<List<Devices>>()
     val userId = 1001
     private var timerLeft = 0
     private var timerJob: Job? = null
 
+    fun getDevices() {
+        viewModelScope.launch {
+
+            val response = api.getDevices(userId)
+            val data = response.data?.data
+            data?.let { devices ->
+                devicesLiveData.value = devices
+            }
+        }
+    }
 
     fun getSignals() {
         timerJob?.cancel()

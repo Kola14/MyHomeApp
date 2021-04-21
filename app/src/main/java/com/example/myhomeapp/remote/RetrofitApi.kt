@@ -1,6 +1,7 @@
 package com.example.myhomeapp.remote
 
 import com.example.myhomeapp.BuildConfig
+import com.example.myhomeapp.models.DevicesWrapper
 import com.example.myhomeapp.models.SignalsWrapper
 import com.example.myhomeapp.remote.api.SignalsApi
 import com.google.gson.Gson
@@ -106,6 +107,14 @@ class RetrofitApi @Inject constructor(
        })
     }
 
+    suspend fun getDevices(
+            userId: Int?
+    ): Resource<DevicesWrapper> {
+        return responseWrapper {
+            //signals.getEventHistory(userId)
+            signals.getDevices()
+        }
+    }
 
 
 /*

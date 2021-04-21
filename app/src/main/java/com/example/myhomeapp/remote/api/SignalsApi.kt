@@ -1,5 +1,6 @@
 package com.example.myhomeapp.remote.api
 
+import com.example.myhomeapp.models.DevicesWrapper
 import com.example.myhomeapp.models.SignalsWrapper
 import retrofit2.Call
 import retrofit2.Response
@@ -23,10 +24,13 @@ interface SignalsApi {
             @Query("signalId") query: Int?
     ): Call<Void>
 
-
-
     @GET("api/clearHistory/1001")
     suspend fun clearHistory(
-           // @Query("userId") query: Int?
-    )
+           //@Query("userId") query: Int?
+    ): Call<Void>
+
+    @GET("api/getdevices/1001")
+    suspend fun getDevices(
+            //@Query("userId") query: Int?
+    ): Response<DevicesWrapper>
 }
