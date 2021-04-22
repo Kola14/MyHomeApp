@@ -47,6 +47,13 @@
 
     </LinearLayout>
 
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/deviceSelectSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recentEventRecycler"
@@ -58,7 +65,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/eventHistoryTitle"
+        app:layout_constraintTop_toBottomOf="@id/deviceSelectSpinner"
         tools:listitem="@layout/item_history" />
 
     <ProgressBar

@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhomeapp.MyApplication
 import com.example.myhomeapp.R
-import com.example.myhomeapp.ui.fragments.recentEvents.RecentEventsAdapter
-import com.example.myhomeapp.ui.fragments.recentEvents.RecentEventsViewModel
 import javax.inject.Inject
 
 class EventHistoryFragment : Fragment() {
@@ -41,6 +39,15 @@ class EventHistoryFragment : Fragment() {
         observeLiveData()
 
         viewModel.getSignals(0)
+
+        val deviceList: ArrayList<String> = ArrayList()
+        deviceList.add("All")
+        //deviceList.add(viewModel.getDevices().toString())
+        view.findViewById<Spinner>(R.id.deviceSelectSpinner)?.apply {
+            val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, deviceList)
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            this.adapter =  spinnerAdapter
+        }
     }
 
     private fun initAdapter() {

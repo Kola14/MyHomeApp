@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -37,8 +39,16 @@ class RecentEventsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         observeLiveData()
-
         viewModel.getSignals()
+
+        val deviceList: ArrayList<String> = ArrayList()
+        deviceList.add("All")
+        //deviceList.add(viewModel.getDevices().toString())
+        view.findViewById<Spinner>(R.id.deviceSelectSpinner)?.apply {
+            val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, deviceList)
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            this.adapter =  spinnerAdapter
+        }
     }
 
     private fun initAdapter() {
