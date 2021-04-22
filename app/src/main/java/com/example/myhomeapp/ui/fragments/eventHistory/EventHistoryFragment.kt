@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
@@ -41,11 +42,11 @@ class EventHistoryFragment : Fragment() {
         initAdapters()
         observeLiveData()
 
-        viewModel.getSignals(0)
+        viewModel.getSignals()
     }
 
     private fun initAdapters() {
-        eventHistoryAdapter = EventHistoryAdapter(viewModel.getSignals(0))
+        eventHistoryAdapter = EventHistoryAdapter(viewModel.getSignals())
         view?.findViewById<RecyclerView>(R.id.recentEventRecycler)?.apply {
             adapter = eventHistoryAdapter
         }
@@ -69,15 +70,29 @@ class EventHistoryFragment : Fragment() {
                 val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, deviceList)
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 this.adapter =  spinnerAdapter
+
+                this.onItemSelectedListener = object :
+                        AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                        if (position == 0) {viewModel.getSignals()}
+                        else{
+                            viewModel.getSpecificSignals(getItemAtPosition(position).toString())
+                        }
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
+                }
             }
         }
 
     }
 
     private fun observeLiveData() {
-        viewModel.signalsLiveData.observe(viewLifecycleOwner) { newsList ->
-            if (!newsList.isNullOrEmpty()) {
-                eventHistoryAdapter.submit(newsList)
+        viewModel.signalsLiveData.observe(viewLifecycleOwner) { signalsList ->
+            if (signalsList != null) {
+                eventHistoryAdapter.submit(signalsList)
             }
         }
     }

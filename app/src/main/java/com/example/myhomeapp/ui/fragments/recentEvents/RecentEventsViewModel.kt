@@ -16,7 +16,7 @@ import javax.inject.Inject
 class RecentEventsViewModel @Inject constructor(
         val api: RetrofitApi
 ) : ViewModel() {
-    val signalsLiveData = MutableLiveData<List<Signals>>()
+    var signalsLiveData = MutableLiveData<List<Signals>>()
     val devicesLiveData = MutableLiveData<List<Devices>>()
     val userId = 1001
     private var timerLeft = 0
@@ -38,16 +38,39 @@ class RecentEventsViewModel @Inject constructor(
         timerLeft = 1
 
         timerJob = viewModelScope.launch {
+
             while (timerLeft > 0) {
                 delay(200)
                 timerLeft--
                 Log.d("timer", timerLeft.toString())
             }
 
+
             val response = api.getRecent(userId)
             val data = response.data?.data
             data?.let { signals ->
                 signalsLiveData.value = signals
+            }
+        }
+    }
+
+    fun getSpecificSignals(device_id: String) {
+        val specifiedList: ArrayList<Signals> = ArrayList()
+        viewModelScope.launch {
+            while (timerLeft > 0) {
+                delay(200)
+                timerLeft--
+                Log.d("timer", timerLeft.toString())
+            }
+            val response = api.getRecent(userId)
+            val data = response.data?.data
+            data?.let { signals ->
+                for (i in signals) {
+                    if (i.device_id.toString() == device_id){
+                        specifiedList.add(i)
+                    }
+                }
+                signalsLiveData.value = specifiedList
             }
         }
     }

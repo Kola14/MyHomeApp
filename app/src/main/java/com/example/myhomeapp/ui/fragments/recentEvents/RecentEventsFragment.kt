@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
@@ -74,12 +75,30 @@ class RecentEventsFragment : Fragment() {
             }
         }
 
+        view?.findViewById<Spinner>(R.id.deviceSelectSpinner)?.apply {
+            this.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, itemview: View, position: Int, id: Long) {
+                    if (position == 0) {
+                        viewModel.getSignals()
+                    }
+                    else{
+                        viewModel.getSpecificSignals(getItemAtPosition(position).toString())
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+        }
+
     }
 
     private fun observeLiveData() {
-        viewModel.signalsLiveData.observe(viewLifecycleOwner) { newsList ->
-            if (!newsList.isNullOrEmpty()) {
-                recentEventsAdapter.submit(newsList)
+        viewModel.signalsLiveData.observe(viewLifecycleOwner) { signalsList ->
+            if (signalsList != null) {
+                recentEventsAdapter.submit(signalsList)
             }
         }
 
