@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class EventHistoryViewModel  @Inject constructor(
-    private val api: RetrofitApi
+     val api: RetrofitApi
 ) : ViewModel() {
     val signalsLiveData = MutableLiveData<List<Signals>>()
     val devicesLiveData = MutableLiveData<List<Devices>>()

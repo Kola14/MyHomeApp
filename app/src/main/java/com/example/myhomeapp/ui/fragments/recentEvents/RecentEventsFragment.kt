@@ -8,10 +8,13 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhomeapp.MyApplication
 import com.example.myhomeapp.R
+import com.example.myhomeapp.models.Devices
 import com.example.myhomeapp.models.Signals
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -37,25 +40,40 @@ class RecentEventsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAdapter()
+        initAdapters()
         observeLiveData()
         viewModel.getSignals()
-
-        val deviceList: ArrayList<String> = ArrayList()
-        deviceList.add("All")
-        //deviceList.add(viewModel.getDevices().toString())
-        view.findViewById<Spinner>(R.id.deviceSelectSpinner)?.apply {
-            val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, deviceList)
-            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            this.adapter =  spinnerAdapter
-        }
     }
 
-    private fun initAdapter() {
+    private fun initAdapters() {
         recentEventsAdapter = RecentEventsAdapter(viewModel.api, viewModel.getSignals())
         view?.findViewById<RecyclerView>(R.id.recentEventRecycler)?.apply {
             adapter = recentEventsAdapter
         }
+
+
+        val deviceList: ArrayList<String> = ArrayList()
+        deviceList.add("All")
+        var devicesData = ArrayList<Devices>()
+        lifecycleScope.launch {
+
+            val response = viewModel.api.getDevices(1101)
+            val data = response.data?.data
+            data?.let { devices ->
+                devicesData = devices as ArrayList<Devices>
+            }
+
+            for (i in devicesData){
+                deviceList.add(i.device_id.toString());
+            }
+
+            view?.findViewById<Spinner>(R.id.deviceSelectSpinner)?.apply {
+                val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, deviceList)
+                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                this.adapter =  spinnerAdapter
+            }
+        }
+
     }
 
     private fun observeLiveData() {
@@ -74,14 +92,14 @@ class RecentEventsFragment : Fragment() {
                 }
             }
 
-            initAdapter()
+            initAdapters()
             viewModel.getSignals()
         }
 
 
 
         viewModel.signalsLiveData.value?.also {
-            initAdapter()
+            initAdapters()
             viewModel.getSignals()
         }
     }
