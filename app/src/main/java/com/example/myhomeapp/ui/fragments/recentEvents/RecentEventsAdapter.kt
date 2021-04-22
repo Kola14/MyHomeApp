@@ -24,6 +24,9 @@ class RecentEventsAdapter (
                 view.findViewById<TextView>(R.id.title).text = "Получен сигнал";
 
                 if (!model.isconfirmed) {
+                    view.findViewById<AppCompatButton>(R.id.btnConfirm).isEnabled = true
+                    view.findViewById<AppCompatButton>(R.id.btnConfirm).visibility = View.VISIBLE
+
                     view.findViewById<AppCompatButton>(R.id.btnConfirm).setOnClickListener(){
 
                         model.isconfirmed = true
