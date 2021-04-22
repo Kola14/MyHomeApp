@@ -11,5 +11,6 @@ data class DevicesWrapper(
 @Parcelize
 data class Devices(
         val id: Int,
-        val device_id: Int
+        val device_id: Int,
+        val device_name: String
 ): Parcelable

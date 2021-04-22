@@ -39,14 +39,14 @@ class EventHistoryViewModel  @Inject constructor(
         }
     }
 
-    fun getSpecificSignals(device_id: String) {
+    fun getSpecificSignals(device_name: String) {
         val specifiedList: ArrayList<Signals> = ArrayList()
         viewModelScope.launch {
             val response = api.getEventHistory(userId)
             val data = response.data?.data
             data?.let { signals ->
                 for (i in signals) {
-                    if (i.device_id.toString() == device_id){
+                    if (i.device_name.toString() == device_name){
                         specifiedList.add(i)
                     }
                 }

@@ -65,7 +65,7 @@ class RecentEventsFragment : Fragment() {
             }
 
             for (i in devicesData){
-                deviceList.add(i.device_id.toString());
+                deviceList.add(i.device_name);
             }
 
             view?.findViewById<Spinner>(R.id.deviceSelectSpinner)?.apply {
