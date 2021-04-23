@@ -1,5 +1,4 @@
 package com.example.myhomeapp.ui.fragments.eventHistory
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -20,11 +19,11 @@ class EventHistoryAdapter (
                 view.findViewById<TextView>(R.id.date).text = model.date;
 
                 if (model.isconfirmed) {
-                    view.findViewById<TextView>(R.id.status).text = "Подтверждено"
+                    view.findViewById<TextView>(R.id.status).text = view.context.getString(R.string.confirmed)
                     view.findViewById<TextView>(R.id.status).backgroundTintList = view.context.getColorStateList(R.color.light_green)
                 }
                 else {
-                    view.findViewById<TextView>(R.id.status).text = "Не подтверждено"
+                    view.findViewById<TextView>(R.id.status).text = view.context.getString(R.string.not_confirmed)
                     view.findViewById<TextView>(R.id.status).backgroundTintList = view.context.getColorStateList(R.color.red)
                 }
             }

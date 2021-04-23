@@ -19,9 +19,9 @@ class RecentEventsAdapter (
         return object : BindingHolder<Signals>(view) {
             override fun bind(model: Signals, position: Int) {
 
-                view.findViewById<TextView>(R.id.time).text = model.time;
-                view.findViewById<TextView>(R.id.date).text = model.date;
-                view.findViewById<TextView>(R.id.title).text = "Получен сигнал";
+                view.findViewById<TextView>(R.id.time).text = model.time
+                view.findViewById<TextView>(R.id.date).text = model.date
+                view.findViewById<TextView>(R.id.title).text = view.context.getString(R.string.signal_recieved)
 
                 if (!model.isconfirmed) {
                     view.findViewById<AppCompatButton>(R.id.btnConfirm).isEnabled = true

@@ -19,5 +19,8 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="cancel">Отмена</string>
+    <string name="confirmed">Подвтерждено</string>
+    <string name="not_confirmed">Не подвтерждено</string>
+    <string name="signal_recieved">Получен сигнал</string>
     <string name="confirm_clear_history_operation">Вы уверены, что хотите удалить историю?</string>
 </resources>

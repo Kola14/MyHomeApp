@@ -35,8 +35,11 @@ class SettingsFragment : Fragment() {
                 ViewModelProvider(this).get(SettingsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
 
-        root.findViewById<TextView>(R.id.settingOperation).text = "Работа устройства";
-        root.findViewById<TextView>(R.id.settingNotification).text = "Уведомления";
+        root.findViewById<TextView>(R.id.settingOperation).text = resources.getString(R.string.operation)
+        root.findViewById<TextView>(R.id.settingNotification).text = resources.getString(R.string.notifications)
+
+        root.findViewById<Switch>(R.id.operationSwitch).isChecked = (activity?.applicationContext as MyApplication).getUpdatableStatus()
+        root.findViewById<Switch>(R.id.notificationSwitch).isChecked= (activity?.applicationContext as MyApplication).getPushNotificationsStatus()
 
         root.findViewById<Switch>(R.id.operationSwitch).setOnClickListener{
             (activity?.applicationContext as MyApplication).setUpdatableStatus(!(activity?.applicationContext as MyApplication).getUpdatableStatus())
