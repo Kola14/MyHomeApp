@@ -24,7 +24,7 @@ interface SignalsApi {
             @Query("signalId") query: Int?
     ): Call<Void>
 
-    @GET("api/clearHistory/1001")
+    @GET("api/clearhistory/1001")
     suspend fun clearHistory(
            //@Query("userId") query: Int?
     ): Call<Void>

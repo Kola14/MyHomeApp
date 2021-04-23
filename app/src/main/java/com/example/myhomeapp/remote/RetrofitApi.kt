@@ -116,6 +116,18 @@ class RetrofitApi @Inject constructor(
         }
     }
 
+    suspend fun clearHistory() {
+        signals.clearHistory().enqueue(object : Callback<Void> {
+            override fun onFailure(call: Call<Void>?, t: Throwable?) {
+                // failure
+            }
+
+            override fun onResponse(call: Call<Void>?, response: Response<Void>?) {
+                // success
+            }
+        })
+    }
+
 
 /*
     suspend fun getEventHistory(

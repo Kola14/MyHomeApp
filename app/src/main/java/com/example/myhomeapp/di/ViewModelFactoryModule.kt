@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myhomeapp.ui.fragments.eventHistory.EventHistoryViewModel
 import com.example.myhomeapp.ui.fragments.recentEvents.RecentEventsViewModel
+import com.example.myhomeapp.ui.fragments.settings.SettingsViewModel
 import com.example.myhomeapp.utils.viewmodel.ViewModelKey
 import com.example.myhomeapp.utils.viewmodel.ViewModelProviderFactory
 import dagger.Binds
@@ -27,4 +28,9 @@ abstract class ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(EventHistoryViewModel::class)
     abstract fun bindEventHistoryViewModel(viewModel: EventHistoryViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    abstract fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
 }
