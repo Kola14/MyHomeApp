@@ -1,7 +1,7 @@
 package com.example.myhomeapp.ui.fragments.recentEvents
 
 import android.os.Bundle
-import android.os.CountDownTimer
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,8 +39,8 @@ class RecentEventsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_recent_events, container, false)
     }
@@ -49,28 +49,50 @@ class RecentEventsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAdapters()
         observeLiveData()
-        viewModel.getSignals()
-        initTimer()
-    }
+        //viewModel.getSignals()
 
-    private fun initTimer(){
+        if (!(activity?.applicationContext as MyApplication).getTimerStatus()){
+            val timer = Timer()
+            val handler = Handler()
+            val doAsynchronousTask: TimerTask = object : TimerTask() {
+                override fun run() {
+                    handler.post {
+                        try {
+                            if ((activity?.applicationContext as MyApplication).getUpdatableStatus()) {
+                                viewModel.getSignals()
+                            }
 
-        var timer = object : CountDownTimer(20000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                if ((activity?.applicationContext as MyApplication).getUpdatableStatus()){
-                    viewModel.getSignals()
+                            if ((activity?.applicationContext as MyApplication).getPushNotificationsStatus()) {
+                                if (!viewModel.signalsLiveData.value.isNullOrEmpty() && viewModel.signalsLiveData.value!!.size != 0){
+                                    if (differenceInMinutes(viewModel.signalsLiveData.value!![0].time, getCurrentTimeInString()) in 0..5) {
+                                        val notificationId = (activity?.applicationContext as MyApplication).getNotificationId()
+                                        var notification = view.let {
+                                            NotificationCompat.Builder(
+                                                    it.context,
+                                                    "MyHomeAppChannel"
+                                            )
+                                                    .setSmallIcon(R.drawable.ic_baseline_error_outline_24)
+                                                    .setContentTitle(resources.getString(R.string.signal_recieved))
+                                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                                    .setAutoCancel(true)
+                                                    .build()
+                                        }
+
+                                        if (notification != null) {
+                                            notificationManager.notify(notificationId, notification)
+                                        }
+                                    }
+                                }
+                            }
+
+                        } catch (e: Exception) {
+
+                        }
+                    }
                 }
             }
-
-            override fun onFinish() {
-                if ((activity?.applicationContext as MyApplication).getUpdatableStatus()){
-                    this.start()
-                }
-            }
+            timer.schedule(doAsynchronousTask, 0, 5000)
         }
-
-        timer.start()
-
     }
 
     private fun initAdapters() {
@@ -97,9 +119,9 @@ class RecentEventsFragment : Fragment() {
 
             view?.findViewById<Spinner>(R.id.deviceSelectSpinner)?.apply {
                 val spinnerAdapter = ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_item,
-                    deviceList
+                        requireContext(),
+                        android.R.layout.simple_spinner_item,
+                        deviceList
                 )
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 this.adapter =  spinnerAdapter
@@ -110,10 +132,10 @@ class RecentEventsFragment : Fragment() {
             this.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    itemview: View,
-                    position: Int,
-                    id: Long
+                        parent: AdapterView<*>,
+                        itemview: View,
+                        position: Int,
+                        id: Long
                 ) {
                     if (position == 0) {
                         viewModel.getSignals()
@@ -131,32 +153,72 @@ class RecentEventsFragment : Fragment() {
 
     }
 
+    private fun differenceInMinutes(time1: String, time2: String) : Int{
+        if (time1.length >= 5 && time2.length >= 5){
+            if (time1[0] == time2[0] && time1[1] == time2[1]) {
+                return (time1[3].toInt() * 10 + time1[4].toInt() - time2[3].toInt() * 10 - time2[4].toInt())
+            }
+        }
+        return 60
+    }
+
+    private fun getCurrentTimeInString(): String{
+        return DateFormat.getTimeInstance(DateFormat.SHORT)
+                .format(
+                        Calendar.getInstance().time
+                ).toString()
+    }
+
     private fun observeLiveData() {
-        var notificationId = 0
         viewModel.signalsLiveData.observe(viewLifecycleOwner) { signalsList ->
             if (signalsList != null) {
                 recentEventsAdapter.submit(signalsList)
             }
 
+
             if (!signalsList.isNullOrEmpty() && signalsList.size != 0){
                 if ((activity?.applicationContext as MyApplication).getPushNotificationsStatus()) {
-                    if (signalsList[0].time[4].toInt() - DateFormat.getTimeInstance(DateFormat.SHORT)
-                            .format(
-                                Calendar.getInstance().time
-                            ).toString()[4].toInt() <= 5
-                    ){
+                    if (differenceInMinutes(signalsList[0].time, getCurrentTimeInString()) in 0..5) {
 
-                        var notification = this.view?.let { NotificationCompat.Builder(it.context, "MyHomeAppChannel")
-                            .setSmallIcon(R.drawable.ic_baseline_error_outline_24)
-                            .setContentTitle(this.getString(R.string.signal_recieved))
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .build()
+
+
+/*
+
+                        val notificationIntent = Intent((activity?.applicationContext as MyApplication).applicationContext, NotificationsReceiver::class.java)
+                        notificationIntent.action = "App_notification"
+                        val sender = PendingIntent.getBroadcast((activity?.applicationContext as MyApplication).applicationContext, 1, notificationIntent, 0)
+                        sender.send()
+
+ */
+                                /*
+                        Intent().also { intent ->
+                            intent.setAction("com.example.broadcast.MY_NOTIFICATION")
+                            intent.putExtra("data", "Nothing to see here, move along.")
+                            sendBroadcast(intent)
+                        }
+
+                                 */
+/*
+                        val notificationId = (activity?.applicationContext as MyApplication).getNotificationId()
+                        var notification = this.view?.let {
+                            NotificationCompat.Builder(
+                                    it.context,
+                                    "MyHomeAppChannel"
+                            )
+                                    .setSmallIcon(R.drawable.ic_baseline_error_outline_24)
+                                    .setContentTitle(this.getString(R.string.signal_recieved))
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                    .setAutoCancel(true)
+                                    .build()
                         }
 
                         if (notification != null) {
                             notificationManager.notify(notificationId, notification)
-                            notificationId++
                         }
+
+
+
+ */
 
                     }
                 }
