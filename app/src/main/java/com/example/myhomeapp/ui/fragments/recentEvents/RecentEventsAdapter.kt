@@ -3,8 +3,10 @@ package com.example.myhomeapp.ui.fragments.recentEvents
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import com.bumptech.glide.Glide
 import com.example.myhomeapp.R
 import com.example.myhomeapp.core.RecyclerAdapter
 import com.example.myhomeapp.models.Signals
@@ -22,6 +24,12 @@ class RecentEventsAdapter (
                 view.findViewById<TextView>(R.id.time).text = model.time
                 view.findViewById<TextView>(R.id.date).text = model.date
                 view.findViewById<TextView>(R.id.title).text = view.context.getString(R.string.signal_recieved)
+
+                Glide
+                    .with(view.context)
+                    .load("http://thumbs.dreamstime.com/z/robber-holding-flashlight-piece-pipe-24011060.jpg")
+                    .centerCrop()
+                    .into(view.findViewById<ImageView>(R.id.image_view_photo))
 
                 if (!model.isconfirmed) {
                     view.findViewById<AppCompatButton>(R.id.btnConfirm).isEnabled = true

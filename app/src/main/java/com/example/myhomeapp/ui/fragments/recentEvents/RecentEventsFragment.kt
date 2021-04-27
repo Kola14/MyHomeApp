@@ -91,7 +91,7 @@ class RecentEventsFragment : Fragment() {
                     }
                 }
             }
-            timer.schedule(doAsynchronousTask, 0, 5000)
+            timer.schedule(doAsynchronousTask, 0, 60000)
         }
     }
 
