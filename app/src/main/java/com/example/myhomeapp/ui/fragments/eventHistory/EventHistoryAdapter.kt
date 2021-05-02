@@ -20,11 +20,15 @@ class EventHistoryAdapter (
                 view.findViewById<TextView>(R.id.time).text = model.time;
                 view.findViewById<TextView>(R.id.date).text = model.date;
 
-                Glide
-                        .with(view.context)
-                        .load("http://thumbs.dreamstime.com/z/robber-holding-flashlight-piece-pipe-24011060.jpg")
-                        .centerCrop()
-                        .into(view.findViewById<ImageView>(R.id.image_view_photo))
+                if (model.image != null)
+                {
+                    Glide
+                            .with(view.context)
+                            //.load("http://thumbs.dreamstime.com/z/robber-holding-flashlight-piece-pipe-24011060.jpg")
+                            .load("http://185.197.74.219:8000/api/getimage/" + model.image)
+                            .centerCrop()
+                            .into(view.findViewById<ImageView>(R.id.image_view_photo))
+                }
 
                 if (model.isconfirmed) {
                     view.findViewById<TextView>(R.id.status).text = view.context.getString(R.string.confirmed)

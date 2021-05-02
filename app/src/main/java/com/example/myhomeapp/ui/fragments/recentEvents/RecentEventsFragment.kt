@@ -63,7 +63,7 @@ class RecentEventsFragment : Fragment() {
                             }
 
                             if ((activity?.applicationContext as MyApplication).getPushNotificationsStatus()) {
-                                if (!viewModel.signalsLiveData.value.isNullOrEmpty() && viewModel.signalsLiveData.value!!.size != 0){
+                                if (!viewModel.signalsLiveData.value.isNullOrEmpty() && viewModel.signalsLiveData.value!!.isNotEmpty()){
                                     if (differenceInMinutes(viewModel.signalsLiveData.value!![0].time, getCurrentTimeInString()) in 0..5) {
                                         val notificationId = (activity?.applicationContext as MyApplication).getNotificationId()
                                         var notification = view.let {

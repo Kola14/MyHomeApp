@@ -85,7 +85,7 @@
             android:layout_width="320dp"
             android:layout_height="240dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnConfirm"
+            app:layout_constraintTop_toBottomOf="@id/confirmedSignal"
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
