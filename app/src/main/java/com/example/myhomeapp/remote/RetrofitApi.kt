@@ -19,7 +19,7 @@ import javax.inject.Inject
 class RetrofitApi @Inject constructor(
         private val gson: Gson
 ) {
-    private val URL = "http://185.197.74.219:8000/"
+    private val URL = ""
     private val signals by lazy { getRetrofit(URL).create(SignalsApi::class.java) }
 
     private fun getRetrofit(baseUrl: String): Retrofit {
@@ -51,29 +51,6 @@ class RetrofitApi @Inject constructor(
     companion object {
         private const val TIMEOUT = 1800L
     }
-
-
-
-    /*
-    suspend fun getRecent(
-            userId: Int?
-    ): Resource<SignalsWrapper> {
-
-        //return signals.getRecent(userId)
-        val list = mutableListOf<Signals>()
-        list.add(Signals(1,"01.04.2021","11:15", false))
-        list.add(Signals(2,"01.04.2021","11:25", false))
-        list.add(Signals(3,"01.04.2021","11:35", false))
-        list.add(Signals(4,"01.04.2021","11:45", true))
-        list.add(Signals(5,"01.04.2021","11:55", true))
-        list.add(Signals(6,"01.04.2021","12:45", false))
-        list.add(Signals(7,"01.04.2021","12:55", false))
-
-        return Resource.success(SignalsWrapper(list))
-    }
-
-
-     */
 
     suspend fun getRecent(
             userId: Int?
@@ -129,22 +106,5 @@ class RetrofitApi @Inject constructor(
     }
 
 
-/*
-    suspend fun getEventHistory(
-            userId: Int?
-    ): Resource<SignalsWrapper> {
-        //return signals.getEventHistory(userId)
-        val list = mutableListOf<Signals>()
-        list.add(Signals(1,"01.04.2021","11:15", false))
-        list.add(Signals(2,"01.04.2021","11:25", false))
-        list.add(Signals(3,"01.04.2021","11:35", false))
-        list.add(Signals(4,"01.04.2021","11:45", true))
-        list.add(Signals(5,"01.04.2021","11:55", true))
-        list.add(Signals(6,"01.04.2021","12:45", false))
-        list.add(Signals(7,"01.04.2021","12:55", false))
 
-        return Resource.success(SignalsWrapper(list))
-    }
-
- */
 }
